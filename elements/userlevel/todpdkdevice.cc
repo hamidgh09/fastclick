@@ -170,6 +170,8 @@ String ToDPDKDevice::statistics_handler(Element *e, void * thunk)
             return String(stats.obytes);
         case h_oerrors:
             return String(stats.oerrors);
+        case h_useful_cycles:
+            return String(home_thread()->useful_kcycles());
     }
 
     return 0;
@@ -184,6 +186,7 @@ void ToDPDKDevice::add_handlers()
     add_read_handler("hw_count",statistics_handler, h_opackets);
     add_read_handler("hw_bytes",statistics_handler, h_obytes);
     add_read_handler("hw_errors",statistics_handler, h_oerrors);
+    add_read_handler("hw_kcycles",statistics_handler, h_useful_cycles);
 }
 
 inline void ToDPDKDevice::set_flush_timer(DPDKDevice::TXInternalQueue &iqueue) {
