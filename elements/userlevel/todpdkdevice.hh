@@ -137,7 +137,7 @@ public:
     void add_handlers() CLICK_COLD;
 
     enum {
-        h_opackets,h_obytes,h_oerrors
+        h_opackets,h_obytes,h_oerrors,h_useful_cycles
     };
 
     void run_timer(Timer *);
