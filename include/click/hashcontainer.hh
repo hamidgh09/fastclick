@@ -104,7 +104,7 @@ class HashContainer { public:
 #else
 	max_bucket_count = (bucket_count_type) -1,
 #endif
-	initial_bucket_count = 63
+	initial_bucket_count = 63000
     };
 
     /** @brief Construct an empty HashContainer. */
