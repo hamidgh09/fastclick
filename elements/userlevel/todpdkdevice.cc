@@ -171,7 +171,7 @@ String ToDPDKDevice::statistics_handler(Element *e, void * thunk)
         case h_oerrors:
             return String(stats.oerrors);
         case h_useful_cycles:
-            return String(home_thread()->useful_kcycles());
+            return String(td->home_thread()->useful_kcycles());
     }
 
     return 0;
