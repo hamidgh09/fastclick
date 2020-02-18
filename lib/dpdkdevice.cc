@@ -279,6 +279,43 @@ static String keep_token_left(String str, char delimiter)
     return str.substring(0, str.find_left(delimiter));
 }
 
+/************************************* HAMID EDDDITS START ************************************************/
+unsigned long total_cycles;
+
+unsigned long DPDKDevice::get_total_cycles(){
+    return total_cycles;
+}
+
+//Rx callBack
+static uint16_t
+add_timestamps(uint16_t port __rte_unused, uint16_t qidx __rte_unused,
+               struct rte_mbuf **pkts, uint16_t nb_pkts,uint16_t max_pkts, void *_ __rte_unused)
+{
+    unsigned i;
+    uint64_t now = rte_rdtsc();
+
+    for (i = 0; i < nb_pkts; i++)
+        pkts[i]->udata64 = now;
+    return nb_pkts;
+}
+
+//Tx callBack
+static uint16_t
+calc_latency(uint16_t port __rte_unused, uint16_t qidx __rte_unused,
+             struct rte_mbuf **pkts, uint16_t nb_pkts, void *_ __rte_unused)
+{
+    uint64_t cycles = 0;
+    uint64_t now = rte_rdtsc();
+    unsigned i;
+
+    for (i = 0; i < nb_pkts; i++)
+        cycles += now - pkts[i]->udata64;
+
+    total_cycles += cycles;
+    return nb_pkts;
+}
+/************************************* HAMID EDDDITS END ************************************************/
+
 int DPDKDevice::initialize_device(ErrorHandler *errh)
 {
     struct rte_eth_conf dev_conf;
@@ -514,6 +551,12 @@ also                ETH_TXQ_FLAGS_NOMULTMEMP
 
     if (info.promisc)
         rte_eth_promiscuous_enable(port_id);
+
+    /************************************* HAMID EDITS START ************************************************/
+    // TODO: SET CALLBACKS ON ALL QUEUES.
+    rte_eth_add_rx_callback(port_id, 0, add_timestamps, NULL);
+    rte_eth_add_tx_callback(port_id, 0, calc_latency, NULL);
+    /************************************* HAMID EDITS END ************************************************/
 
     if (info.init_mac != EtherAddress()) {
         struct rte_ether_addr addr;

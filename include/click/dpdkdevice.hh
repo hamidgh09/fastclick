@@ -154,6 +154,8 @@ public:
     const char *get_device_driver();
     int set_rss_max(int max);
 
+    unsigned long get_total_cycles();
+
     static unsigned int dev_count() {
 #if RTE_VERSION >= RTE_VERSION_NUM(18,05,0,0)
         return rte_eth_dev_count_avail();
