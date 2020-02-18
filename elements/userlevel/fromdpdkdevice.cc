@@ -293,7 +293,7 @@ enum {
         h_nb_rx_queues, h_nb_tx_queues, h_nb_vf_pools,
         h_mac, h_add_mac, h_remove_mac, h_vf_mac,
         h_mtu,
-        h_device,
+        h_device,h_cycles,
 };
 
 
@@ -333,6 +333,8 @@ String FromDPDKDevice::read_handler(Element *e, void * thunk)
             return fd->_dev->get_device_vendor_name();
         case h_driver:
             return String(fd->_dev->get_device_driver());
+        case h_cycles:
+            return String(fd->_dev->get_total_cycles());
     }
 
     return 0;
@@ -555,6 +557,7 @@ void FromDPDKDevice::add_handlers()
     add_read_handler("driver", read_handler, h_driver);
     add_write_handler("add_mac",write_handler, h_add_mac, 0);
     add_write_handler("remove_mac",write_handler, h_remove_mac, 0);
+    add_read_handler("h_cycles",read_handler, h_cycles);
 
     add_read_handler("hw_count",statistics_handler, h_ipackets);
     add_read_handler("hw_bytes",statistics_handler, h_ibytes);
