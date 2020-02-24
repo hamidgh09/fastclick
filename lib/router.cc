@@ -1383,9 +1383,9 @@ Router::initialize(ErrorHandler *errh)
             } else if (e->in_batch_mode == Element::BATCH_MODE_IFPOSSIBLE) {
                 e->in_batch_mode = Element::BATCH_MODE_NO;
                 e->receives_batch = false;
-#if HAVE_VERBOSE_BATCH
+/*#if HAVE_VERBOSE_BATCH
                 click_chatter("%s won't be in batch mode because no element produces or sends batches to it.",e->name().c_str());
-#endif
+#endif*/
                 continue;
             } else if (e->in_batch_mode == Element::BATCH_MODE_NEEDED) {
                 click_chatter("%p{element} is a batch-only element ! Please "
