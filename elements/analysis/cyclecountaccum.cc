@@ -33,8 +33,10 @@ CycleCountAccum::~CycleCountAccum()
 inline Packet*
 CycleCountAccum::simple_action(Packet *p)
 {
+    printf("miad eenja!\n");
 	state &s = *_state;
     if (PERFCTR_ANNO(p)) {
+        printf("enja ham miad!\n");
 	s.accum += click_get_cycles() - PERFCTR_ANNO(p);
 	s.count++;
     } else {
