@@ -281,9 +281,22 @@ static String keep_token_left(String str, char delimiter)
 
 /************************************* HAMID EDDDITS START ************************************************/
 unsigned long total_cycles;
+unsigned long counter = 0;
+unsigned long min_batch_size = 0;
+unsigned long total_batch_size = 0;
+
 
 unsigned long DPDKDevice::get_total_cycles(){
     return total_cycles;
+}
+
+unsigned long DPDKDevice::get_min_batch_size(){
+    return min_batch_size;
+}
+
+unsigned float DPDKDevice::get_avg_batch_size(){
+    float avg = ((total_batch_size * 1.0) / (counter * 1.0))
+    return avg;
 }
 
 //Rx callBack
@@ -294,6 +307,12 @@ add_timestamps(uint16_t port __rte_unused, uint16_t qidx __rte_unused,
     unsigned i;
     uint64_t now = rte_rdtsc();
 
+    if(nb_pkts > 0){
+        counter++;
+        total_batch_size += nb_pkts;
+        if(nb_pkts < min_batch_size)
+            min_batch_size = nb_pkts;
+    }
     printf("nb_packets is: %d", nb_pkts);
 
     for (i = 0; i < nb_pkts; i++)
