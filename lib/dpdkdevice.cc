@@ -294,7 +294,7 @@ add_timestamps(uint16_t port __rte_unused, uint16_t qidx __rte_unused,
     unsigned i;
     uint64_t now = rte_rdtsc();
 
-    printf("nb_packets is: %d", nb_pkts)
+    printf("nb_packets is: %d", nb_pkts);
 
     for (i = 0; i < nb_pkts; i++)
         pkts[i]->udata64 = now;
