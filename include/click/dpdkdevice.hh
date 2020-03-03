@@ -155,6 +155,9 @@ public:
     int set_rss_max(int max);
 
     unsigned long get_total_cycles();
+    unsigned long get_min_batch_size();
+    unsigned float get_avg_batch_size();
+
 
     static unsigned int dev_count() {
 #if RTE_VERSION >= RTE_VERSION_NUM(18,05,0,0)
