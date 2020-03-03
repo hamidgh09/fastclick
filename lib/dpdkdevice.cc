@@ -282,7 +282,7 @@ static String keep_token_left(String str, char delimiter)
 /************************************* HAMID EDDDITS START ************************************************/
 unsigned long total_cycles;
 unsigned long counter = 0;
-unsigned long min_batch_size = 0;
+unsigned long min_batch_size = 64;
 unsigned long total_batch_size = 0;
 
 
