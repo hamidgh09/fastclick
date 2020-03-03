@@ -295,7 +295,7 @@ unsigned long DPDKDevice::get_min_batch_size(){
 }
 
 float DPDKDevice::get_avg_batch_size(){
-    float avg = ((total_batch_size * 1.0) / (counter * 1.0))
+    float avg = ((total_batch_size * 1.0) / (counter * 1.0));
     return avg;
 }
 
