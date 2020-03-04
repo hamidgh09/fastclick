@@ -157,6 +157,7 @@ public:
     unsigned long get_total_cycles();
     unsigned long get_min_batch_size();
     float get_avg_batch_size();
+    String get_batch_array_dist();
 
 
     static unsigned int dev_count() {

@@ -23,6 +23,7 @@
 #include <click/dpdkdevice.hh>
 #include <click/userutils.hh>
 #include <rte_errno.h>
+using namespace std;
 
 CLICK_DECLS
 
@@ -284,6 +285,7 @@ unsigned long total_cycles;
 unsigned long counter = 0;
 unsigned long min_batch_size = 64;
 unsigned long total_batch_size = 0;
+int batch_array[32] = {-1};
 
 
 unsigned long DPDKDevice::get_total_cycles(){
@@ -299,6 +301,14 @@ float DPDKDevice::get_avg_batch_size(){
     return avg;
 }
 
+String DPDKDevice::get_batch_array_dist(){
+    String results = "";
+    for(int i=0; i<32; i++){
+        results = results + str(i) +  "," + str(batch_array[i]) + "\n";
+    }
+    return results;
+}
+
 //Rx callBack
 static uint16_t
 add_timestamps(uint16_t port __rte_unused, uint16_t qidx __rte_unused,
@@ -307,7 +317,12 @@ add_timestamps(uint16_t port __rte_unused, uint16_t qidx __rte_unused,
     unsigned i;
     uint64_t now = rte_rdtsc();
 
+    if(batch_array[0] == -1){
+        std::fill_n(batch_array, 32, 0)
+    }
+
     if(nb_pkts > 0){
+        batch_array[nb_pkts]++;
         counter++;
         total_batch_size += nb_pkts;
         if(nb_pkts < min_batch_size)

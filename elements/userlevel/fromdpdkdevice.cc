@@ -293,7 +293,7 @@ enum {
         h_nb_rx_queues, h_nb_tx_queues, h_nb_vf_pools,
         h_mac, h_add_mac, h_remove_mac, h_vf_mac,
         h_mtu,
-        h_device,h_cycles,h_min_batch,h_avg_batch,
+        h_device,h_cycles,h_min_batch,h_avg_batch,h_dist_batch,
 };
 
 
@@ -339,6 +339,8 @@ String FromDPDKDevice::read_handler(Element *e, void * thunk)
             return String(fd->_dev->get_min_batch_size());
         case h_avg_batch:
             return String(fd->_dev->get_avg_batch_size());
+        case h_dist_batch:
+            return fd->_dev->get_batch_array_dist();
     }
 
     return 0;
@@ -564,6 +566,7 @@ void FromDPDKDevice::add_handlers()
     add_read_handler("h_cycles",read_handler, h_cycles);
     add_read_handler("h_min_batch",read_handler, h_min_batch);
     add_read_handler("h_avg_batch",read_handler, h_avg_batch);
+    add_read_handler("h_dist_batch",read_handler, h_dist_batch);
 
     add_read_handler("hw_count",statistics_handler, h_ipackets);
     add_read_handler("hw_bytes",statistics_handler, h_ibytes);
