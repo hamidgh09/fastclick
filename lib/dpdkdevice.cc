@@ -23,7 +23,6 @@
 #include <click/dpdkdevice.hh>
 #include <click/userutils.hh>
 #include <rte_errno.h>
-using namespace std;
 
 CLICK_DECLS
 
@@ -318,7 +317,8 @@ add_timestamps(uint16_t port __rte_unused, uint16_t qidx __rte_unused,
     uint64_t now = rte_rdtsc();
 
     if(batch_array[0] == -1){
-        std::fill_n(batch_array, 32, 0)
+        for(int i=0; i<32; i++)
+            batch_array[i]=0;
     }
 
     if(nb_pkts > 0){
