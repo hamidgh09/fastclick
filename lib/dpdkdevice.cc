@@ -303,7 +303,7 @@ float DPDKDevice::get_avg_batch_size(){
 String DPDKDevice::get_batch_array_dist(){
     String results = "";
     for(int i=0; i<32; i++){
-        results = results + str(i) +  "," + str(batch_array[i]) + "\n";
+        results = results + String(i) +  "," + String(batch_array[i]) + "\n";
     }
     return results;
 }
