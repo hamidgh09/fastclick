@@ -284,7 +284,7 @@ unsigned long total_cycles;
 unsigned long counter = 0;
 unsigned long min_batch_size = 64;
 unsigned long total_batch_size = 0;
-int batch_array[32] = {-1};
+int batch_array[34] = {-1};
 
 
 unsigned long DPDKDevice::get_total_cycles(){
@@ -302,7 +302,7 @@ float DPDKDevice::get_avg_batch_size(){
 
 String DPDKDevice::get_batch_array_dist(){
     String results = "";
-    for(int i=0; i<32; i++){
+    for(int i=0; i<34; i++){
         results = results + String(i) +  "," + String(batch_array[i]) + "\n";
     }
     return results;
@@ -317,7 +317,7 @@ add_timestamps(uint16_t port __rte_unused, uint16_t qidx __rte_unused,
     uint64_t now = rte_rdtsc();
 
     if(batch_array[0] == -1){
-        for(int i=0; i<32; i++)
+        for(int i=0; i<34; i++)
             batch_array[i]=0;
     }
 
